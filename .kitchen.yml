@@ -1,0 +1,40 @@
+---
+driver:
+  name: docker
+  use_sudo: false
+  privileged: true
+
+platforms:
+  - name: ubuntu
+    driver_config:
+      run_command: /lib/systemd/systemd
+
+suites:
+  - name: git
+
+provisioner:
+  name: salt_solo
+  salt_install: bootstrap
+  salt_version: latest
+  salt_bootstrap_url: https://bootstrap.saltstack.com
+  salt_bootstrap_options: -X -p git -p curl -p sudo
+  is_file_root: true
+  require_chef: false
+  salt_copy_filter:
+    - .idea/
+    - .git/
+    - .gitignore
+    - .gitlab-ci.yml
+    - .kitchen/
+    - .kitchen.yml
+    - Gemfile
+    - Gemfile.lock
+    - tests/
+  dependencies:
+    - name: letsencrypt
+      repo: git
+      source: https://gitlab.dylanwilson.dev/infrastructure/salt-formulas/letsencrypt-formula.git
+  state_top:
+    base:
+      "*":
+        - git
