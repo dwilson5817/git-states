@@ -47,6 +47,7 @@ provisioner:
           - letsencrypt
           - core
     core.sls:
+      testing: true
       letsencrypt:
         use_package: true
         pkgs:
