@@ -38,3 +38,17 @@ provisioner:
     base:
       "*":
         - git
+  pillars_from_files:
+    letsencrypt.sls: pillar/letsencrypt.sls
+  pillars:
+    top.sls:
+      base:
+        "*":
+          - letsencrypt
+          - core
+    core.sls:
+      testing: true
+      letsencrypt:
+        use_package: true
+        pkgs:
+          - python3-certbot-dns-cloudflare

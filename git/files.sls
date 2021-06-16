@@ -24,6 +24,7 @@ certbot_dir:
       - file: secrets_dir
 
 {%- set dns_credentials = salt['pillar.get']('letsencrypt:dns_credentials') %}
+{%- set testing = salt['pillar.get']('testing') %}
 
 # CLOUDFLARE SECRETS FILE
 # CloudFlare API secrets for use by the Certbot CloudFlare DNS plugin.  At present, the package in the Ubuntu
@@ -58,10 +59,8 @@ pages_cert:
     - email: webmaster@dylanw.net
     - dns_plugin: cloudflare
     - dns_plugin_credentials: /root/.secrets/certbot/cloudflare.ini
-    {% if is_prod is defined %}
-    {% if not is_prod %}
+    {% if testing %}
     - server: https://acme-staging-v02.api.letsencrypt.org/directory
-    {% endif %}
     {% endif %}
     - require:
       - file: cloudflare_ini
