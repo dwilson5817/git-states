@@ -45,8 +45,8 @@ provisioner:
       base:
         "*":
           - letsencrypt
-          - core
-    core.sls:
+          - git
+    git.sls:
       testing: true
       letsencrypt:
         use_package: true
