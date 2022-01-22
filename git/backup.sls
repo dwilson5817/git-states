@@ -21,7 +21,7 @@ daily_backup:
 # be out of sync for 1 hours.  We use the delete option so the maximum backups option in GitLab also applies here.
 hourly_rsync:
   cron.present:
-    - name: rsync -vu --delete /var/opt/gitlab/backups/ /mnt/ftpback-rbx2-173.ovh.net/git01
+    - name: rsync -a --no-perms --no-owner --no-group --delete /var/opt/gitlab/backups/ /mnt/ftpback-rbx2-173.ovh.net/git01
     - user: root
     - special: '@hourly'
     - require:
